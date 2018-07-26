@@ -23,7 +23,7 @@ class _Stateful extends StatefulWidget {
 }
 
 class __StatefulState extends State<_Stateful> {
-  var items = new List<String>.generate(50, (i) => "Item $i");
+  var items = new List<String>.generate(20, (i) => "Item $i");
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,25 @@ class __StatefulState extends State<_Stateful> {
             itemCount: items.length + 1,
             itemBuilder: (context, index) {
               final widgetItem = (index==items.length)
-                  ? new RaisedButton(onPressed: null)
+                  ? new RaisedButton(
+                  color: Colors.lightBlue,
+                  child: new Text(
+                    'Load more ...',
+                    style: new TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  onPressed: (){
+
+                    var nextItems = new List<String>.generate(20, (i){
+                      var itemId = i+items.length;
+                      return "Item $itemId";
+                    });
+                    setState(() {
+                      items.addAll(nextItems);
+                    });
+                  })
                   : new ListTile(
                 title: new Text('${items[index]}'),
               );
